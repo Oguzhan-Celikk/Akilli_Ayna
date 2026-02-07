@@ -1,0 +1,24 @@
+﻿# JetBrains IDE dosyaları
+.idea/
+
+# Python sanal ortamı
+.venv/
+venv/
+env/
+
+# Python önbellek dosyaları
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Paket yöneticisi bağımlılıkları
+/MagicMirror/node_modules/
+
+# İşletim sistemine özgü dosyalar
+.DS_Store
+Thumbs.db
+
+
+MagicMirror/*
+!MagicMirror/.gitkeep
