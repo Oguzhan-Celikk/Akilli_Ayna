@@ -55,11 +55,36 @@ Sistem, "Hibrit Aktivasyon" mantığıyla çalışır:
 4.  **Gesture Level:** `MediaPipe` üzerinden işaret parmağı ucu ($x, y$) koordinatları takip edilir.
     * *Swipe (Left/Right):* Parmağın yatay hareketi ile sayfalar arası geçiş yapılır.
     * *Hold:* El 1.5 saniye sabit tutulduğunda "Not Alma" komutu tetiklenir.
-5.  **Integration:** Algılanan hareketler `MMM-Remote-Control` API'si üzerinden MagicMirror arayüzüne komut olarak gönderilir.
+5.  **Integration (Yol B - Özel Modül):** Algılanan hareketler, sisteme özel geliştirilen `MMM-SmartMirror` modülüne `MMM-Remote-Control` API'si üzerinden özel bildirimler (Custom Notifications) olarak gönderilir.
 
 ---
 
-## 🚀 4. Kurulum Adımları (Step-by-Step)
+## 🏗 4. Yol B: Özel Uygulama Yaklaşımı (Geliştirme Planı)
+
+Bu yaklaşımda, MagicMirror'ın standart modülleri yerine, tüm fonksiyonları ses ve el hareketleriyle tam uyumlu çalışan **sıfırdan bir özel modül** geliştirilmektedir.
+
+### A. MMM-SmartMirror Modülü Özellikleri
+- **Dinamik İçerik Yönetimi:** Haberler, takvim ve hava durumu tek bir modül içinde sekmeli yapıya sahiptir.
+- **Gesture API Entegrasyonu:** `gestures.py`'dan gelen `SMARTMIRROR_NEXT`, `SMARTMIRROR_PREV` gibi bildirimleri doğrudan dinler.
+- **Özel Fonksiyonlar:**
+  - *Haber Kaydırma:* El hareketiyle listede aşağı/yukarı kaydırma.
+  - *Hızlı Not Alma:* Hold (bekleme) hareketiyle aktif edilen sesli not arayüzü.
+
+### B. İletişim Altyapısı
+Python Backend ile MagicMirror Frontend arasındaki iletişim şu akışla sağlanır:
+1. `gestures.py` bir hareket algılar.
+2. Python `requests` kütüphanesi ile MagicMirror'ın Remote API'sine bir HTTP isteği gönderilir:
+   `GET /remote?action=NOTIFICATION&notification=SMARTMIRROR_ACTION&payload=NEXT`
+3. MagicMirror tarafında `MMM-SmartMirror.js`, `notificationReceived` fonksiyonu ile bu veriyi yakalar ve arayüzü günceller.
+
+### C. Manuel Olarak Yapılması Gerekenler
+1. **Modül Kurulumu:** `modules/` klasörü altına `MMM-SmartMirror` klasörü oluşturulmalı ve temel `.js`, `.css` dosyaları hazırlanmalı.
+2. **Config Güncelleme:** `config/config.js` dosyasına yeni modül eklenmeli ve `MMM-Remote-Control` whitelist ayarları yapılmalı.
+3. **API Tanımları:** Backend tarafında gönderilen komut isimleri ile Frontend tarafında beklenen bildirim isimleri eşleştirilmeli.
+
+---
+
+## 🚀 5. Kurulum Adımları (Step-by-Step)
 
 ### 1. Adım: MagicMirror² Kurulumu
 ```bash
@@ -97,22 +122,28 @@ pip install mediapipe pvporcupine pvrecorder requests opencv-python
 ```
 
 
+---
 
-node_modules\.bin\electron js\electron.js bunla ekran açılıyor 
+## 🖥️ 6. MagicMirror Başlatma Komutları
 
+MagicMirror arayüzünü başlatmak için aşağıdaki yöntemleri kullanabilirsiniz:
 
-2. Kalıcı Çözüm (package.json Güncelleme)
-Her seferinde uzun komut yazmamak için:
+### A. Manuel Başlatma (Hızlı Test)
+MagicMirror klasörüne gidin ve Electron üzerinden arayüzü başlatın:
+```powershell
+cd MagicMirror
+.\node_modules\.bin\electron js\electron.js
+```
 
-PyCharm'da MagicMirror klasörünün içindeki package.json dosyasını aç.
+### B. Kalıcı Çözüm (NPM Script)
+Her seferinde uzun komut yazmamak için `MagicMirror/package.json` dosyasındaki `"scripts"` bölümünü güncelleyin:
 
-"scripts" bölümünü bul.
-
-Oradaki "start" satırını şu şekilde değiştir:
-
-JSON
-"start": "electron js/electron.js",
-Kaydet ve terminale tekrar şunu yaz:
-
-PowerShell
-npm run start
+1. `package.json` dosyasını açın.
+2. `"start": "node serveronly"` satırını veya mevcut start satırını şu şekilde değiştirin:
+   ```json
+   "start": "electron js/electron.js"
+   ```
+3. Artık sadece şu komutu kullanarak başlatabilirsiniz:
+   ```powershell
+   npm run start
+   ```
