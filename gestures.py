@@ -20,13 +20,13 @@ class GestureEngine:
         self.remote_url = "http://localhost:8080/remote"
 
     def send_command(self, action):
-        """Sends command to MagicMirror MMM-Remote-Control"""
+        """SmartMirror özel modülüne (MMM-SmartMirror) bildirim yollar."""
         try:
-            # Note: actual MagicMirror remote control params might differ, 
-            # common is ?action=NOTIFICATION&notification=...
-            # This is a placeholder based on README.
-            requests.get(f"{self.remote_url}?action={action}", timeout=1)
-            print(f"Sent action: {action}")
+            # Yol B: Custom Notification üzerinden iletişim
+            # /remote?action=NOTIFICATION&notification=SMARTMIRROR_ACTION&payload=<ACTION>
+            url = f"{self.remote_url}?action=NOTIFICATION&notification=SMARTMIRROR_ACTION&payload={action}"
+            requests.get(url, timeout=1)
+            print(f"Sent SMARTMIRROR_ACTION: {action}")
         except Exception as e:
             print(f"MagicMirror remote not reachable: {e}")
 
@@ -52,11 +52,11 @@ class GestureEngine:
                     dx = self.pos_history[-1] - self.pos_history[0]
                     if dx > self.swipe_threshold:
                         gesture_detected = "SWIPE_RIGHT"
-                        self.send_command("NEXT_PAGE")
+                        self.send_command("NEXT")
                         self.pos_history = [] # Reset
                     elif dx < -self.swipe_threshold:
                         gesture_detected = "SWIPE_LEFT"
-                        self.send_command("PREV_PAGE")
+                        self.send_command("PREV")
                         self.pos_history = []
 
                 # --- Hold Detection ---
@@ -67,7 +67,7 @@ class GestureEngine:
                     elapsed = time.time() - self.hold_start_time
                     if elapsed > self.hold_threshold:
                         gesture_detected = "HOLD"
-                        self.send_command("TAKE_NOTE")
+                        self.send_command("SCROLL_DOWN")
                         self.hold_start_time = time.time() # Reset
 
                 self.mp_draw.draw_landmarks(img, hand_lms, self.mp_hands.HAND_CONNECTIONS)
