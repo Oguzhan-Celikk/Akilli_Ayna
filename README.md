@@ -63,6 +63,12 @@ Sistem, "Hibrit Aktivasyon" mantığıyla çalışır:
 
 Bu yaklaşımda, MagicMirror'ın standart modülleri yerine, tüm fonksiyonları ses ve el hareketleriyle tam uyumlu çalışan **sıfırdan bir özel modül** geliştirilmektedir.
 
+### ✅ Tamamlanan ve Devam Eden Adımlar (Yol B Log)
+- [x] **MMM-Remote-Control Kurulumu:** Python backend ile iletişim için gerekli olan temel modül kuruldu. (Manuel olarak yapıldı)
+- [x] **MMM-SmartMirror İskeleti:** Özel modülün temel dosyalarının (`.js`, `.css`) oluşturulması. (Oluşturuldu: `modules/MMM-SmartMirror/MMM-SmartMirror.js`, `.css`)
+- [x] **Backend-Frontend Bağlantısı:** `gestures.py` üzerinden özel bildirimlerin (notification) gönderilmesi ve modül tarafından yakalanması. (Güncellendi: `gestures.py` → `SMARTMIRROR_ACTION` bildirimleri gönderiyor)
+- [ ] **Modül İçerik Geliştirme:** Haber, hava durumu ve takvim entegrasyonu.
+
 ### A. MMM-SmartMirror Modülü Özellikleri
 - **Dinamik İçerik Yönetimi:** Haberler, takvim ve hava durumu tek bir modül içinde sekmeli yapıya sahiptir.
 - **Gesture API Entegrasyonu:** `gestures.py`'dan gelen `SMARTMIRROR_NEXT`, `SMARTMIRROR_PREV` gibi bildirimleri doğrudan dinler.
@@ -82,9 +88,60 @@ Python Backend ile MagicMirror Frontend arasındaki iletişim şu akışla sağl
 2. **Config Güncelleme:** `config/config.js` dosyasına yeni modül eklenmeli ve `MMM-Remote-Control` whitelist ayarları yapılmalı.
 3. **API Tanımları:** Backend tarafında gönderilen komut isimleri ile Frontend tarafında beklenen bildirim isimleri eşleştirilmeli.
 
+### D. MMM-SmartMirror Modül İskeleti Kurulumu
+Aşağıdaki dosyalar oluşturuldu ve temel işlevler eklendi:
+- `modules/MMM-SmartMirror/MMM-SmartMirror.js` — Modül tanımı, DOM üretimi, `SMARTMIRROR_ACTION` bildirimlerini dinleme ve basit aksiyon işleyici (NEXT, PREV, SCROLL_UP, SCROLL_DOWN).
+- `modules/MMM-SmartMirror/MMM-SmartMirror.css` — Basit stil dosyası.
+
+MagicMirror'a eklemek için `config/config.js` dosyasındaki `modules` listesine şu girdiyi ekleyin (örnek konum: `top_left`):
+```js
+{
+  module: "MMM-SmartMirror",
+  position: "top_left",
+  config: {
+    title: "Akıllı Ayna Hazır!",
+    scrollStep: 100
+  }
+}
+```
+
 ---
 
-## 🚀 5. Kurulum Adımları (Step-by-Step)
+## 📡 5. Remote Bildirim Sistemi ve Test Rehberi
+
+MagicMirror'ın diğer yazılımlarla (Python, Tarayıcı vb.) konuşmasını sağlayan sistem `MMM-Remote-Control` API'sidir.
+
+### A. Bildirim URL Yapısı
+Özel modülümüze (MMM-SmartMirror) komut göndermek için şu URL yapısı kullanılır:
+`http://localhost:8080/remote?action=NOTIFICATION&notification=SMARTMIRROR_ACTION&payload=KOMUT`
+
+Burada **KOMUT** yerine şunları yazabilirsiniz:
+- `NEXT`: Ekranda "Sonraki içeriğe geçildi." yazar.
+- `PREV`: Ekranda "Önceki içeriğe dönüldü." yazar.
+- `SCROLL_DOWN`: Ekranda "Aşağı kaydırıldı." yazar.
+
+### B. Nasıl Test Edilir? (3 Yöntem)
+
+#### 1. Yöntem: Tarayıcı (En Kolay)
+MagicMirror açıkken tarayıcınızın adres çubuğuna şu linki yapıştırın ve Enter'a basın:
+`http://localhost:8080/remote?action=NOTIFICATION&notification=SMARTMIRROR_ACTION&payload=NEXT`
+*Ekranda yazının değiştiğini anında görmelisiniz.*
+
+#### 2. Yöntem: PowerShell (Terminal)
+VS Code veya PyCharm terminaline şu komutu yapıştırın:
+```powershell
+Invoke-WebRequest "http://localhost:8080/remote?action=NOTIFICATION&notification=SMARTMIRROR_ACTION&payload=NEXT"
+```
+
+#### 3. Yöntem: Python (Otomatik)
+Sistem zaten bu şekilde çalışacak şekilde ayarlandı. `gestures.py` elinizi algıladığında arka planda şu kodu çalıştırır:
+```python
+requests.get("http://localhost:8080/remote?action=NOTIFICATION&notification=SMARTMIRROR_ACTION&payload=NEXT")
+```
+
+---
+
+## 🚀 6. Kurulum Adımları (Step-by-Step)
 
 ### 1. Adım: MagicMirror² Kurulumu
 ```bash
