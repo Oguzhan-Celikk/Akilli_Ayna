@@ -1,4 +1,4 @@
-# 🪞 Proje: Smart Mirror - Gesture & Voice Controlled Bedroom Assistant
+# Proje: Smart Mirror - Gesture & Voice Controlled Bedroom Assistant
 
 Bu proje; yatak odası kullanımı için optimize edilmiş, gizlilik odaklı, sesli aktivasyon ve temassız el hareketleriyle (Gesture Control) kontrol edilen ileri seviye bir akıllı ayna sistemidir. Dokunmatik ekran yerine AI tabanlı el takibi kullanarak parmak izi ve ayna kirliliği sorununu tamamen ortadan kaldırır.
 
