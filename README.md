@@ -4,7 +4,7 @@ Bu proje; yatak odası kullanımı için optimize edilmiş, gizlilik odaklı, se
 
 ---
 
-## 🛠 1. Donanım Mimarisi ve Bileşen Listesi
+##  1. Donanım Mimarisi ve Bileşen Listesi
 
 Sistem, yüksek performanslı bir Edge AI deneyimi için Raspberry Pi 5 mimarisi üzerine kurulmuştur.
 
