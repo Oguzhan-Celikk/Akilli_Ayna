@@ -33,7 +33,7 @@ while cap.isOpened():
             mp_draw.draw_landmarks(img, hand_lms, mp_hands.HAND_CONNECTIONS)
 
     cv2.imshow("Ayna Test - El Takibi", img)
-    if cv2.waitKey(1) & 0xFF == ord('q'): break
+    if cv2.waitKey(1) & 0xFF == ord('q'):  break
 
 cap.release()
 cv2.destroyAllWindows()
