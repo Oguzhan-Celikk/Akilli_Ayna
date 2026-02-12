@@ -24,7 +24,7 @@ Sistem, yüksek performanslı bir Edge AI deneyimi için Raspberry Pi 5 mimarisi
 
 ---
 
-## 🔌 2. Teknik Bağlantı Şeması (Wiring)
+##  2. Teknik Bağlantı Şeması (Wiring)
 
 | Modül | Pi 5 Bağlantı Noktası | Notlar |
 | :--- | :--- | :--- |
