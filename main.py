@@ -14,7 +14,7 @@ def on_wake_word():
     gesture_engine = GestureEngine()
     gesture_engine.run()
 
-def main():
+def main(): 
     if PICOVOICE_ACCESS_KEY == "YOUR_ACCESS_KEY":
         print("Warning: PICOVOICE_ACCESS_KEY not set. Voice activation will fail.")
         # You can still run gestures directly for testing:
