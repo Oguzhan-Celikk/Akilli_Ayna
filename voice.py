@@ -9,7 +9,7 @@ class VoiceEngine:
         :param access_key: Your Picovoice Access Key.
         :param keyword_path: Path to the .ppn keyword file. If None, uses default 'porcupine'.
         """
-        self.access_key = access_key
+        self.access_key = access_key 
         keywords = [keyword_path] if keyword_path else ['porcupine']
         
         self.porcupine = pvporcupine.create(
