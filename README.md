@@ -7,7 +7,7 @@ Bu proje; yatak odası kullanımı için optimize edilmiş, gizlilik odaklı, se
 ##  1. Donanım Mimarisi ve Bileşen Listesi
 
 Sistem, yüksek performanslı bir Edge AI deneyimi için Raspberry Pi 5 mimarisi üzerine kurulmuştur.
-
+ 
 ### A. Ana Bilgisayar ve Görüntü
 * **İşlemci:** Raspberry Pi 5 (8GB RAM) - *MediaPipe el takibi ve ses analizi için yüksek FPS sağlar.*
 * **Ekran:** 10.1 inç HDMI IPS LCD Panel (1280x800) - *İnce yapısı ve yüksek kontrastı ile ayna arkasında en iyi siyah performansı sunar.*
