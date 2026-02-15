@@ -15,7 +15,7 @@ class GestureEngine:
         self.hold_start_time = None
         self.swipe_threshold = 100 # Reduced for better sensitivity
         self.hold_threshold = 1.5  # seconds
-        self.history_len = 5
+        self.history_len = 5 
         self.pos_history = []
         self.remote_url = "http://localhost:8080/remote"
 
