@@ -15,16 +15,15 @@ def on_wake_word():
     gesture_engine.run()
 
 def main():
-    if PICOVOICE_ACCESS_KEY == "YOUR_ACCESS_KEY":
-        print("Warning: PICOVOICE_ACCESS_KEY not set. Voice activation will fail.")
-        # You can still run gestures directly for testing:
-        # gesture_engine = GestureEngine()
-        # gesture_engine.run()
-        # return
+    # PICOVOICE_ACCESS_KEY ayarlanmamışsa veya varsayılan değerdeyse doğrudan el motoruna geç
+    if PICOVOICE_ACCESS_KEY == "YOUR_ACCESS_KEY" or not PICOVOICE_ACCESS_KEY:
+        print("Warning: PICOVOICE_ACCESS_KEY not set. Falling back to Gesture Engine directly...")
+        gesture_engine = GestureEngine()
+        gesture_engine.run()
+        return
 
-    voice_engine = VoiceEngine(access_key=PICOVOICE_ACCESS_KEY)
-    
     try:
+        voice_engine = VoiceEngine(access_key=PICOVOICE_ACCESS_KEY)
         voice_engine.start_listening(callback=on_wake_word)
     except Exception as e:
         print(f"Error starting voice engine: {e}")
