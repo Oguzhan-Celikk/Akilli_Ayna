@@ -67,6 +67,8 @@ Bu yaklaşımda, MagicMirror'ın standart modülleri yerine, tüm fonksiyonları
 - [x] **MMM-Remote-Control Kurulumu:** Python backend ile iletişim için gerekli olan temel modül kuruldu. (Manuel olarak yapıldı)
 - [x] **MMM-SmartMirror İskeleti:** Özel modülün temel dosyalarının (`.js`, `.css`) oluşturulması. (Oluşturuldu: `modules/MMM-SmartMirror/MMM-SmartMirror.js`, `.css`)
 - [x] **Backend-Frontend Bağlantısı:** `gestures.py` üzerinden özel bildirimlerin (notification) gönderilmesi ve modül tarafından yakalanması. (Güncellendi: `gestures.py` → `SMARTMIRROR_ACTION` bildirimleri gönderiyor)
+- [x] **Çok Sayfalı Yapı (MMM-pages):** Ekran 3 ana sayfaya bölündü (Saat/Haberler, Hava Durumu/Radar, ISS/Özel Modül).
+- [x] **El Hareketi Stabilizasyonu:** "Sayfa atlama" sorunu için 1 saniyelik "Soğuma Süresi (Cooldown)" ve dinamik hassasiyet filtreleri eklendi.
 - [ ] **Modül İçerik Geliştirme:** Haber, hava durumu ve takvim entegrasyonu.
 
 ### A. MMM-SmartMirror Modülü Özellikleri
@@ -107,41 +109,40 @@ MagicMirror'a eklemek için `config/config.js` dosyasındaki `modules` listesine
 
 ---
 
-## 📡 5. Remote Bildirim Sistemi ve Test Rehberi
+## 📡 5. El Hareketleri ve Kontrol Sistemi
 
-MagicMirror'ın diğer yazılımlarla (Python, Tarayıcı vb.) konuşmasını sağlayan sistem `MMM-Remote-Control` API'sidir.
+Sistem, `MediaPipe` kütüphanesi ile elinizi takip eder ve `127.0.0.1:8080` üzerinden MagicMirror'a komut gönderir.
 
-### A. Bildirim URL Yapısı
-Özel modülümüze (MMM-SmartMirror) komut göndermek için şu URL yapısı kullanılır:
-`http://localhost:8080/remote?action=NOTIFICATION&notification=SMARTMIRROR_ACTION&payload=KOMUT`
+### A. Hareket Sözlüğü
+- **Sağa Hızlı Kaydırma (Swipe Right):** Bir sonraki sayfaya geçer (`PAGE_INCREMENT`).
+- **Sola Hızlı Kaydırma (Swipe Left):** Bir önceki sayfaya döner (`PAGE_DECREMENT`).
+- **Sabit Bekleme (Hold):** Haberler listesinde aşağı kaydırma yapar (`SCROLL_DOWN`).
 
-Burada **KOMUT** yerine şunları yazabilirsiniz:
-- `NEXT`: Ekranda "Sonraki içeriğe geçildi." yazar.
-- `PREV`: Ekranda "Önceki içeriğe dönüldü." yazar.
-- `SCROLL_DOWN`: Ekranda "Aşağı kaydırıldı." yazar.
-
-### B. Nasıl Test Edilir? (3 Yöntem)
-
-#### 1. Yöntem: Tarayıcı (En Kolay)
-MagicMirror açıkken tarayıcınızın adres çubuğuna şu linki yapıştırın ve Enter'a basın:
-`http://localhost:8080/remote?action=NOTIFICATION&notification=SMARTMIRROR_ACTION&payload=NEXT`
-*Ekranda yazının değiştiğini anında görmelisiniz.*
-
-#### 2. Yöntem: PowerShell (Terminal)
-VS Code veya PyCharm terminaline şu komutu yapıştırın:
-```powershell
-Invoke-WebRequest "http://localhost:8080/remote?action=NOTIFICATION&notification=SMARTMIRROR_ACTION&payload=NEXT"
-```
-
-#### 3. Yöntem: Python (Otomatik)
-Sistem zaten bu şekilde çalışacak şekilde ayarlandı. `gestures.py` elinizi algıladığında arka planda şu kodu çalıştırır:
-```python
-requests.get("http://localhost:8080/remote?action=NOTIFICATION&notification=SMARTMIRROR_ACTION&payload=NEXT")
-```
+### B. Hassasiyet ve Stabilizasyon
+- **Cooldown (1sn):** Bir sayfa geçişinden sonra sistem 1 saniye bekler. Bu, tek bir el hareketiyle birden fazla sayfa atlanmasını engeller.
+- **Eşik (120px):** Yanlış tetiklemeleri önlemek için elin en az 120 piksel hareket etmesi gerekir.
 
 ---
 
-## 🚀 6. Kurulum Adımları (Step-by-Step)
+## 🛠️ 6. Sorun Giderme (Troubleshooting)
+
+### 1. El Algılanmıyor / Kamera Açılmıyor
+- **Hata:** `ModuleNotFoundError: No module named 'mediapipe.solutions'`
+- **Çözüm:** `pip uninstall mediapipe -y ; pip install --no-cache-dir mediapipe`
+- **Kamera Testi:** `python test_camera.py` scriptini çalıştırarak kameranın elinizi görüp görmediğini bağımsız olarak test edebilirsiniz.
+
+### 2. Hareket Algılanıyor Ama Sayfa Değişmiyor
+- **Hata:** `MagicMirror remote not reachable`
+- **Kontrol:** `MagicMirror/config/config.js` içinde şunların olduğundan emin olun:
+  ```js
+  address: "0.0.0.0",
+  ipWhitelist: [],
+  ```
+- **Port:** MagicMirror'ın `8080` portunda çalıştığından ve `MMM-Remote-Control` modülünün yüklü olduğundan emin olun.
+
+---
+
+## 🚀 7. Kurulum Adımları (Step-by-Step)
 
 ### 1. Adım: MagicMirror² Kurulumu
 ```bash
@@ -175,6 +176,7 @@ pip install mediapipe pvporcupine pvrecorder requests opencv-python
 ├── gestures.py    # MediaPipe el hareketleri ve API entegrasyonu
 ├── voice.py       # Picovoice sesli aktivasyon katmanı
 ├── gesture_engine.py # (Opsiyonel) Bağımsız test scripti
+├── test_camera.py # kameranın çalışma kontrolü
 └── README.md      # Proje dokümantasyonu
 ```
 
