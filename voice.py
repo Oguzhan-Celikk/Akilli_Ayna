@@ -11,7 +11,7 @@ class VoiceEngine:
         """
         self.access_key = access_key
         keywords = [keyword_path] if keyword_path else ['porcupine']
-        
+         
         self.porcupine = pvporcupine.create(
             access_key=access_key,
             keywords=keywords
