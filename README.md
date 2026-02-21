@@ -15,7 +15,7 @@ Sistem, yüksek performanslı bir Edge AI deneyimi için Raspberry Pi 5 mimarisi
 
 ### B. Etkileşim ve Algılama (Input)
 * **Kamera:** Raspberry Pi Camera Module 3 (Wide-Angle) - *Kısa mesafeden tüm el hareketlerini görebilmek için geniş açılı lens gereklidir.*
-* **Mikrofon:** ReSpeaker 2-Mics Pi HAT - *Çift mikrofon ve I2S desteği ile uzak alan (Far-field) ses algılama.*
+* **Mikrofon:** ReSpeaker 2-Mics Pi HAT - *Çift mikrofon ve I2S desteği ile uzak alan (Far-field) ses algılama.* 
 * **Güç Anahtarı:** Latching Metal Push Button (16mm, LED'li) - *Sistemin ana şebeke girişini kontrol eden donanımsal kesici.*
 
 ### C. Ses ve Soğutma (Output)
