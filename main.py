@@ -15,7 +15,7 @@ def on_wake_word():
     gesture_engine.run()
 
 def main():
-    # PICOVOICE_ACCESS_KEY ayarlanmamışsa veya varsayılan değerdeyse doğrudan el motoruna geç
+    # PICOVOICE_ACCESS_KEY ayarlanmamışsa veya varsayılan değerdeyse doğrudan el motoruna geç 
     if PICOVOICE_ACCESS_KEY == "YOUR_ACCESS_KEY" or not PICOVOICE_ACCESS_KEY:
         print("Warning: PICOVOICE_ACCESS_KEY not set. Falling back to Gesture Engine directly...")
         gesture_engine = GestureEngine()
