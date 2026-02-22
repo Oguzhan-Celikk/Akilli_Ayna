@@ -11,7 +11,7 @@ Sistem, yüksek performanslı bir Edge AI deneyimi için Raspberry Pi 5 mimarisi
 ### A. Ana Bilgisayar ve Görüntü
 * **İşlemci:** Raspberry Pi 5 (8GB RAM) - *MediaPipe el takibi ve ses analizi için yüksek FPS sağlar.*
 * **Ekran:** 10.1 inç HDMI IPS LCD Panel (1280x800) - *İnce yapısı ve yüksek kontrastı ile ayna arkasında en iyi siyah performansı sunar.*
-* **Ayna:** 6mm İki Yönlü Gerçek Cam (Two-Way Mirror) - *Boyut: 25-40 cm (Ekran üst 20x20 cm alana merkezlenir).*
+* **Ayna:** 6mm İki Yönlü Gerçek Cam (Two-Way Mirror) - *Boyut: 25-40 cm (Ekran üst 20x20 cm alana merkezlenir).* 
 
 ### B. Etkileşim ve Algılama (Input)
 * **Kamera:** Raspberry Pi Camera Module 3 (Wide-Angle) - *Kısa mesafeden tüm el hareketlerini görebilmek için geniş açılı lens gereklidir.*
