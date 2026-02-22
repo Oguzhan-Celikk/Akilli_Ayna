@@ -14,7 +14,7 @@ while cap.isOpened():
 
     # Görüntüyü yatayda çevir (Ayna etkisi)
     img = cv2.flip(img, 1) 
-    h, w, c = img.shape
+    h, w, c = img.shape 
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
     results = hands.process(img_rgb)
 
