@@ -14,7 +14,7 @@ class VoiceEngine:
          
         self.porcupine = pvporcupine.create(
             access_key=access_key,
-            keywords=keywords
+            keywords=keywords 
         )
         self.recorder = PvRecorder(device_index=-1, frame_length=self.porcupine.frame_length)
 
