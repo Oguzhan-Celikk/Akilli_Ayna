@@ -9,7 +9,7 @@ def test_camera_and_hands():
     
     if "site-packages" not in mp.__file__:
         print("!!! UYARI: MediaPipe kütüphane yerine yerel bir dosyadan yükleniyor!")
-        print(f"Lütfen şu dosyayı silin veya ismini değiştirin: {mp.__file__}")
+        print(f"Lütfen şu dosyayı silin veya ismini değiştirin: {mp.__file__}") 
         return
 
     print("Kamera ve El Algılama Testi Başlatılıyor...")
