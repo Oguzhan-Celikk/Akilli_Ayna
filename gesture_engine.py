@@ -10,7 +10,7 @@ cap = cv2.VideoCapture(0) # Bilgisayarının kamerasını açar
 
 while cap.isOpened():
     success, img = cap.read()
-    if not success: break
+    if not success: break 
 
     # Görüntüyü yatayda çevir (Ayna etkisi)
     img = cv2.flip(img, 1) 
