@@ -12,7 +12,7 @@ def on_wake_word():
     # In a real scenario, we might want to run this in a separate thread or 
     # switch states. For now, let's start the gesture engine. 
     gesture_engine = GestureEngine() 
-    gesture_engine.run()
+    gesture_engine.run() 
 
 def main():
     # PICOVOICE_ACCESS_KEY ayarlanmamışsa veya varsayılan değerdeyse doğrudan el motoruna geç 
