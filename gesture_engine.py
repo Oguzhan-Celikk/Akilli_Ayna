@@ -12,7 +12,7 @@ while cap.isOpened():
     success, img = cap.read()
     if not success: break 
 
-    # Görüntüyü yatayda çevir (Ayna etkisi)
+    # Görüntüyü yatayda çevir (Ayna etkisi) 
     img = cv2.flip(img, 1) 
     h, w, c = img.shape 
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
