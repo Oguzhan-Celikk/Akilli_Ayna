@@ -9,7 +9,7 @@ PICOVOICE_ACCESS_KEY = os.getenv("PICOVOICE_ACCESS_KEY", "YOUR_ACCESS_KEY")
 
 def on_wake_word():
     print("Activation triggered! Starting Gesture Control...")
-    # In a real scenario, we might want to run this in a separate thread or 
+    # In a real scenario, we might want to run this in a separate thread or  
     # switch states. For now, let's start the gesture engine. 
     gesture_engine = GestureEngine()  
     gesture_engine.run() 
