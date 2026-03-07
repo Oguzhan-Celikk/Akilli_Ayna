@@ -8,7 +8,7 @@ mp_draw = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0) # Bilgisayarının kamerasını açar
  
-while cap.isOpened():
+while cap.isOpened(): 
     success, img = cap.read()
     if not success: break 
 
